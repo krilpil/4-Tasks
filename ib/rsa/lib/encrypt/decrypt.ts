@@ -1,5 +1,4 @@
 import getPrivateKey from '../key/getPrivateKey';
-import codeToText from '../../shared/helpers/codeToText';
 
 export interface IDecrypt {
   encrypted: number[],
@@ -10,11 +9,11 @@ export interface IDecrypt {
 const decrypt = ({ encrypted, q, p }: IDecrypt) => {
   const { d, mod } = getPrivateKey({ p, q });
 
-  const decryptArray: number[] = encrypted.map((element) => {
-    return Number((BigInt(element) ** BigInt(d)) % BigInt(mod));
+  const decryptCode: string[] = encrypted.map((element) => {
+    return String.fromCharCode(Number((BigInt(element) ** BigInt(d)) % BigInt(mod)));
   });
 
-  return codeToText(decryptArray);
+  return decryptCode.join('');
 };
 
 export default decrypt;

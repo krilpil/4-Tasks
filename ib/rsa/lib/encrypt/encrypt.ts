@@ -1,5 +1,4 @@
 import getPubicKey from '../key/getPubicKey';
-import textToCode from '../../shared/helpers/textToCode';
 
 export interface IEncrypt {
   text: string,
@@ -11,9 +10,9 @@ const encrypt = ({ text, q, p }: IEncrypt): number[] => {
   const { e, mod } = getPubicKey({ p, q });
   const encryptArray: number[] = [];
 
-  textToCode(text).forEach((element) => {
-    encryptArray.push(Number((BigInt(element) ** BigInt(e)) % BigInt(mod)));
-  });
+  for (let index = 0; index < text.length; index++) {
+    encryptArray.push(Number((BigInt(text.charCodeAt(index)) ** BigInt(e)) % BigInt(mod)));
+  }
 
   return encryptArray;
 };
