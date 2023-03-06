@@ -1,10 +1,9 @@
-import { CONFIG } from './ib/rsa/config/config';
-import { decrypt, encrypt } from './ib/rsa/index';
+import {getCiphertext, getDecryption, getKey} from "./ib/digital_signature";
 
-const p = CONFIG.P;
-const q = CONFIG.Q;
 
-const encrypted: number[] = encrypt({ p, q, text: 'Hello, how are you?))))' });
-const decrypted: string = decrypt({ p, q, encrypted });
+const {publicKey, privateKey} = getKey();
+const ciphertext = getCiphertext({message: 'kirill', publicKey, privateKey})
 
-console.log(encrypted, decrypted);
+ciphertext.message = 'kirill'
+
+console.log(getDecryption({publicKey, ciphertext}))
